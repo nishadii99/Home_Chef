@@ -5,9 +5,9 @@
 This is my **Semester 2 Final Project** – a full-stack web-based food ordering and management system.  
 The platform enables **Customers**, **Chefs/Publishers**, and **Admins** to interact with the system in different ways.
 
-- **Customers** can browse meals, add them to the cart, place orders, view order history, and receive real-time order confirmation emails.  
-- **Chefs / Publishers** can create and manage their dishes, update prices, and view order analytics.  
-- **Admins** can manage users, menu items, chefs, and all orders while monitoring system activities.  
+- **Customers** can browse meals, add them to the cart, place orders, view order history, and receive real-time order confirmation emails.
+- **Chefs / Publishers** can create and manage their dishes, update prices, and view order analytics.
+- **Admins** can manage users, menu items, chefs, and all orders while monitoring system activities.
 
 The platform integrates third-party APIs such as **FreeImage** for image hosting and **PayHere** for handling payments.
 
@@ -16,6 +16,29 @@ The platform integrates third-party APIs such as **FreeImage** for image hosting
 ## ⚙️ SETUP INSTRUCTIONS
 
 Follow these steps to run the project locally.
+
+## Screenshots
+ 
+Home Page
+![homepage.png](Screenshots/homepage.png)
+
+Login
+![Login.png](Screenshots/Login.png)
+
+Buyer Profile
+![BuyerProfile.png](Screenshots/BuyerProfile.png)
+
+Buyer Dashboard
+![BuyerDashboard.png](Screenshots/BuyerDashboard.png)
+
+Shopping Cart
+![ShoppingCart.png](Screenshots/ShoppingCart.png)
+
+Add Items
+![AddItem.png](Screenshots/AddItem.png)
+
+Checkouts
+![Checkouts.png](Screenshots/Checkouts.png)
 
 ### 🔹 Full Project
 Clone the repository:
