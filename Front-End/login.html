@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Home Chef-Login</title>
+  <link href="plugins/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Font Awesome -->
+  <link href="plugins/font-awesome/css/font-awesome.min.css" rel="stylesheet">
+  <!-- Owl Carousel -->
+  <link href="plugins/slick-carousel/slick/slick.css" rel="stylesheet">
+  <link href="plugins/slick-carousel/slick/slick-theme.css" rel="stylesheet">
+  <!-- Fancy Box -->
+  <link href="plugins/fancybox/jquery.fancybox.pack.css" rel="stylesheet">
+  <link href="plugins/jquery-nice-select/css/nice-select.css" rel="stylesheet">
+  <link href="plugins/seiyria-bootstrap-slider/dist/css/bootstrap-slider.min.css" rel="stylesheet">
+  <link href="css/style.css" rel="stylesheet">
+  <link href="css/login.css" rel="stylesheet">
+  <link rel="shortcut icon" href="img/logo2-removebg-preview.png" type="image/x-icon" />
+</head>
+<style>
+  .inner {
+    min-width: 850px;
+    margin: auto;
+    padding-top: 68px;
+    padding-bottom: 48px;
+    background: url("img/logo2-removebg-preview.png") no-repeat right top;
+    background-repeat: no-repeat;
+    box-shadow: 1px 1px 4px rgba(0, 0, 0, 0.6);
+    border-radius: 10px;
+  }
+</style>
+<body>
+<section id="navbar">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12">
+        <nav class="navbar navbar-expand-lg  navigation">
+          <a class="navbar-brand" href="pages/index.html">
+            <img style="width: 3rem;height: 3rem" src="img/logo2-removebg-preview.png" alt="">
+            <span>Home Chef</span></a>
+          </a>
+          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav ml-auto main-nav ">
+              <li class="nav-item active">
+                <a class="nav-link" href="index-1.html">Home</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="index-1.html#items">Items</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="index-1.html#reviews">Reviews</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="index-1.html#sellers">Sellers</a>
+              </li>
+            </ul>
+            <ul class="navbar-nav ml-auto mt-10">
+              <li class="nav-item">
+                <a class="nav-link login-button text-light" href="login.html" style="background-color: #19945d;border-radius: 15px">Login</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link login-button text-light" href="register.html" style="background-color: #19945d;border-radius: 15px"> Register</a>
+              </li>
+            </ul>
+          </div>
+        </nav>
+      </div>
+    </div>
+  </div>
+</section>
+<div class="wrapper hero-area " style="background-image: url('img/bg-registration-form-2.jpg');">
+  <div class="inner">
+    <form action="">
+      <h3>Login Form</h3>
+      <div class="form-wrapper">
+        <label for="name-login">Email</label><br>
+        <input type="text" class="form-control" id="name-login" required autocomplete="current-name">
+      </div>
+
+      <div class="form-wrapper">
+        <label for="password-login">Password</label>
+        <input type="password" class="form-control" id="password-login" required autocomplete="current-name">
+      </div>
+      <button id="loginBtn"  type="button" >Login Now</button>
+    </form>
+    <p  style="margin-left: 175px;margin-top: 10px">
+      <b>
+        <a href="#" class="pointer" style="color: #0a53be;text-decoration: underline">
+          Forgot password?
+        </a>
+
+      </b>
+    </p>
+    <p style="margin-left: 120px;margin-top: 10px">
+							<span>
+								Don't have an account?
+							</span>
+      <b onclick="toggle()" class="pointer" style="cursor: pointer;">
+        <a href="register.html" style="color: #0a53be">
+          Sign up here
+        </a>
+
+      </b>
+    </p>
+  </div>
+</div>
+<script src="frameWork/jquery/jquery-3.7.1.min.js"></script>
+<script src="frameWork/sweetalert2/sweetalert2.all.min.js"></script>
+<script>
+  $(document).ready(function () {
+    $('#loginBtn').click(function (){
+      let name = $('#name-login').val();
+      let password = $('#password-login').val();
+
+      $.ajax({
+        url: 'http://localhost:8080/api/v1/auth/authenticate',
+        method: 'POST',
+        contentType: 'application/json',
+        data: JSON.stringify({
+          "email": name,
+          "password": password
+        }),
+        success: function(response) {
+          localStorage.setItem("token", response.data.token);
+          Swal.fire({
+            icon: "success",
+            title: "Success",
+            text: "Login Successful!",
+          }).then(() => {
+            switch(response.data.role) {
+              case "SELLER":
+                window.location.href = "home.html";
+                break;
+              case "BUYER":
+                window.location.href = "buyerHome.html";
+                break;
+              default:
+                console.error("Unknown role:", response.data.role);
+                window.location.href = "index-1.html";
+            }
+          });
+        },
+        error: function (error) {
+          Swal.fire({
+            icon: "error",
+            title: "Oops...",
+            text: " Something went wrong!",
+          }).then(() => {
+            window.location.href = "login.html";
+          });
+        }
+      });
+
+
+    });
+  });
+</script>
+</body>
+</html>

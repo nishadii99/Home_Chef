@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HomeChef - Checkout</title>
+    <script type="text/javascript" src="https://www.payhere.lk/lib/payhere.js"></script>
+    <link rel="shortcut icon" href="img/logo2-removebg-preview.png" type="image/x-icon" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #f0f8f8;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: auto;
+        }
+
+        .checkout-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 30px;
+            background: #fff;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+        }
+
+        .payment-form,
+        .order-summary {
+            flex: 1;
+            min-width: 300px;
+            padding: 20px;
+        }
+
+        .payment-form h2,
+        .order-summary h2 {
+            color: #005555;
+            margin-bottom: 20px;
+            border-bottom: 2px solid #ddd;
+            padding-bottom: 10px;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: 500;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 10px;
+            border-radius: 5px;
+            border: 1px solid #ddd;
+        }
+
+        .pay-btn {
+            background: #005555;
+            color: white;
+            border: none;
+            padding: 15px;
+            font-size: 18px;
+            border-radius: 5px;
+            cursor: pointer;
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+            margin-top: 10px;
+        }
+
+        .pay-btn:hover {
+            background: #004444;
+        }
+
+        .order-items .order-item {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+        }
+
+        .total {
+            font-weight: bold;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1>Checkout</h1>
+        <div class="checkout-container">
+            <div class="payment-form">
+                <h2><i class="fas fa-user-circle"></i> Customer Information</h2>
+                <form id="checkout-form">
+                    <div class="form-group">
+                        <label for="fullname">Full Name</label>
+                        <input type="text" id="fullname" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email Address</label>
+                        <input type="email" id="email" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="phone">Phone Number</label>
+                        <input type="tel" id="phone" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="address">Delivery Address</label>
+                        <input type="text" id="address" required>
+                    </div>
+                </form>
+            </div>
+            <div class="order-summary">
+                <h2><i class="fas fa-receipt"></i> Order Summary</h2>
+                <div class="order-items" id="order-items">
+                    <!-- Cart items loaded here -->
+                </div>
+                <div class="calculation">Subtotal: <span id="subtotal">LKR 0</span></div>
+                <div class="calculation">Delivery Fee: <span id="delivery">LKR 250</span></div>
+                <div class="calculation">Tax (5%): <span id="tax">LKR 0</span></div>
+                <div class="calculation total">Total: <span id="total">LKR 0</span></div>
+                <button type="submit" form="checkout-form" class="pay-btn"><i class="fas fa-lock"></i> Pay Now</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const orderItemsContainer = document.getElementById('order-items');
+        const subtotalEl = document.getElementById('subtotal');
+        const taxEl = document.getElementById('tax');
+        const totalEl = document.getElementById('total');
+        const deliveryFee = 250;
+        let cartItems = [];
+
+        async function fetchMe() {
+            try {
+                const res = await fetch('http://localhost:8080/api/v1/profile/me',
+                    { method: 'GET', headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + localStorage.getItem('token') } }
+                );
+                const data = await res.json();
+                if (data.code === 200) {
+                    document.getElementById('fullname').value = data.data.firstName + ' ' + data.data.lastName || '';
+                    document.getElementById('email').value = data.data.email || '';
+                    document.getElementById('phone').value = data.data.contact || '';
+                    document.getElementById('address').value = data.data.address || '';
+                } else throw new Error(data.message || 'Failed to load user data');
+            } catch (err) {
+                console.error(err);
+                Swal.fire('Error', 'Failed to load user information', 'error');
+            }
+        }
+        // Fetch cart from API
+        async function fetchCart() {
+            try {
+                const res = await fetch('http://localhost:8080/api/v1/cart/get',
+                    { method: 'GET', headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + localStorage.getItem('token') } }
+                );
+                const data = await res.json();
+                if (data.code === 200) {
+                    cartItems = data.data;
+                    renderCart();
+                } else throw new Error(data.message || 'Failed to load cart');
+            } catch (err) {
+                console.error(err);
+                Swal.fire('Error', 'Failed to load cart items', 'error');
+            }
+        }
+
+        // Render cart items
+        function renderCart() {
+            orderItemsContainer.innerHTML = '';
+            let subtotal = 0;
+
+            cartItems.forEach(item => {
+                const itemTotal = item.price * item.quantity;
+                subtotal += itemTotal;
+                const div = document.createElement('div');
+                div.className = 'order-item';
+                div.innerHTML = `<div>${item.name} (${item.quantity}x)</div><div>LKR ${itemTotal.toFixed(2)}</div>`;
+                orderItemsContainer.appendChild(div);
+            });
+
+            const tax = subtotal * 0.05;
+            const total = subtotal + tax + deliveryFee;
+
+            subtotalEl.textContent = `LKR ${subtotal.toFixed(2)}`;
+            taxEl.textContent = `LKR ${tax.toFixed(2)}`;
+            totalEl.textContent = `LKR ${total.toFixed(2)}`;
+        }
+
+        // PayHere integration
+        async function startPayHerePayment() {
+            const fullname = document.getElementById('fullname').value;
+            const email = document.getElementById('email').value;
+            const phone = document.getElementById('phone').value;
+            const address = document.getElementById('address').value;
+
+            const subtotal = parseFloat(subtotalEl.textContent.replace(/[^\d.]/g, ''));
+            const tax = parseFloat(taxEl.textContent.replace(/[^\d.]/g, ''));
+            const total = parseFloat(totalEl.textContent.replace(/[^\d.]/g, ''));
+
+            if (cartItems.length === 0) {
+                Swal.fire('Error', 'Your cart is empty!', 'error');
+                return;
+            }
+
+            // Create payment via your backend
+            try {
+                const res = await fetch('http://localhost:8080/api/v1/payment/create', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + localStorage.getItem('token') },
+                    body: JSON.stringify({
+                        name: fullname,
+                        amount: total,
+                        currency: "LKR",
+                        email: email
+                    })
+                });
+                const data = await res.json();
+                if (!data.orderId || !data.signature) throw new Error('Payment creation failed');
+
+                const payment = {
+                    sandbox: true,
+                    merchant_id: "1225478",
+                    return_url: "http://localhost:5500/payment-success.html",
+                    cancel_url: "http://localhost:5500/payment-failed.html",
+                    notify_url: "http://localhost:8080/api/v1/payment/notify",
+                    order_id: data.orderId,
+                    items: "Cart Purchase",
+                    amount: total,
+                    hash: data.signature,
+                    currency: "LKR",
+                    first_name: fullname.split(' ')[0] || "Test",
+                    last_name: fullname.split(' ')[1] || "User",
+                    email: email,
+                    phone: phone,
+                    address: address,
+                    city: "Colombo",
+                    country: "Sri Lanka"
+                };
+
+                payhere.onCompleted = function onCompleted(orderId) {
+                    console.log("Payment completed. OrderID:", orderId);
+                    window.location.href = `payment-success.html?order_id=${orderId}&amount=${total}&status=paid`;
+                };
+
+                payhere.onDismissed = function onDismissed() {
+                    console.log("Payment popup dismissed");
+                    window.location.href = `payment-failed.html?status=cancelled&order_id=${data.orderId}&amount=${total}`;
+                };
+
+                payhere.onError = function onError(error) {
+                    console.error("Payment error:", error);
+                    window.location.href = `payment-failed.html?status=error&order_id=${data.orderId}&amount=${total}`;
+                };
+
+                payhere.startPayment(payment);
+
+            } catch (err) {
+                console.error(err);
+                Swal.fire('Error', 'Payment initiation failed', 'error');
+            }
+        }
+
+        // Form submit
+        document.getElementById('checkout-form').addEventListener('submit', function (e) {
+            e.preventDefault();
+            startPayHerePayment();
+        });
+        fetchMe();
+        fetchCart();
+    </script>
+</body>
+
+</html>

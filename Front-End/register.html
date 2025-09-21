@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Home Chef-Register</title>
+    <link href="plugins/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link href="plugins/font-awesome/css/font-awesome.min.css" rel="stylesheet">
+    <!-- Owl Carousel -->
+    <link href="plugins/slick-carousel/slick/slick.css" rel="stylesheet">
+    <link href="plugins/slick-carousel/slick/slick-theme.css" rel="stylesheet">
+    <!-- Fancy Box -->
+    <link href="plugins/fancybox/jquery.fancybox.pack.css" rel="stylesheet">
+    <link href="plugins/jquery-nice-select/css/nice-select.css" rel="stylesheet">
+    <link href="plugins/seiyria-bootstrap-slider/dist/css/bootstrap-slider.min.css" rel="stylesheet">
+    <link href="css/style.css" rel="stylesheet">
+    <link href="css/register.css" rel="stylesheet">
+    <link rel="shortcut icon" href="img/logo2-removebg-preview.png" type="image/x-icon" />
+</head>
+<style>
+    .inner {
+        min-width: 850px;
+        margin: auto;
+        padding-top: 68px;
+        padding-bottom: 48px;
+        background: url("img/logo2-removebg-preview.png") no-repeat right top;
+        background-repeat: no-repeat;
+        box-shadow: 1px 1px 4px rgba(0, 0, 0, 0.6);
+        border-radius: 10px;
+        margin-top: 20px;
+        margin-bottom: 20px;
+    }
+</style>
+
+<body>
+    <section id="navbar">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <nav class="navbar navbar-expand-lg  navigation">
+                        <a class="navbar-brand" href="pages/index.html">
+                            <img style="width: 3rem;height: 3rem" src="img/logo2-removebg-preview.png" alt="">
+                            <span>Home Chef</span></a>
+                        </a>
+                        <button class="navbar-toggler" type="button" data-toggle="collapse"
+                            data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+                            aria-expanded="false" aria-label="Toggle navigation">
+                            <span class="navbar-toggler-icon"></span>
+                        </button>
+                        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                            <ul class="navbar-nav ml-auto main-nav ">
+                                <li class="nav-item active">
+                                    <a class="nav-link" href="index-1.html">Home</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="index-1.html#items">Items</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="index-1.html#reviews">Reviews</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="index-1.html#sellers">Sellers</a>
+                                </li>
+                            </ul>
+                            <ul class="navbar-nav ml-auto mt-10">
+                                <li class="nav-item">
+                                    <a class="nav-link login-button text-light" href="login.html"
+                                        style="background-color: #19945d;border-radius: 15px">Login</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link login-button text-light" href="register.html"
+                                        style="background-color: #19945d;border-radius: 15px"> Register</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </section>
+    <div class="wrapper hero-area " style="background-image: url('img/bg-registration-form-2.jpg');">
+        <div class="inner">
+            <form action="">
+                <h3>Registration Form</h3>
+                <div class="form-group">
+                    <div class="form-wrapper">
+                        <label for="name">Username</label>
+                        <input type="text" id="name" class="form-control" required>
+                    </div>
+                </div>
+                <div class="form-wrapper">
+                    <label for="email">Email</label><br>
+                    <input type="text" class="form-control" id="email" required>
+                </div>
+
+                <div class="form-wrapper">
+                    <label for="password">Password</label>
+                    <input type="password" class="form-control" id="password" required>
+                </div>
+                <div class="form-wrapper">
+                    <label for="confirm-password">Confirm Password</label>
+                    <input type="password" class="form-control" id="confirm-password" required>
+                </div>
+                <button id="registerBtn" type="button">Register Now</button>
+            </form>
+            <p style="margin-left: 120px;margin-top: 10px">
+                <span>
+                    Already have an account?
+                </span>
+                <b onclick="toggle()" class="pointer" style="cursor: pointer;">
+                    <a href="login.html" style="color: #0a53be;">
+                        Sign in here
+                    </a>
+
+                </b>
+            </p>
+        </div>
+    </div>
+    <script src="frameWork/jquery/jquery-3.7.1.min.js"></script>
+    <script src="frameWork/sweetalert2/sweetalert2.all.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('#registerBtn').click(function () {
+                // Get form values
+                let name = $('#name').val().trim();
+                let email = $('#email').val().trim();
+                let password = $('#password').val();
+                let confirmPassword = $('#confirm-password').val();
+
+                if (!name || !email || !password || !confirmPassword) {
+                    Swal.fire({
+                        icon: "error",
+                        title: "Missing Information",
+                        text: "Please fill in all fields",
+                    });
+                    return;
+                }
+
+                if (password !== confirmPassword) {
+                    Swal.fire({
+                        icon: "error",
+                        title: "Password Mismatch",
+                        text: "Password and Confirm Password do not match",
+                    });
+                    return;
+                }
+
+                if (password.length < 8) {
+                    Swal.fire({
+                        icon: "error",
+                        title: "Weak Password",
+                        text: "Password must be at least 8 characters long",
+                    });
+                    return;
+                }
+
+                Swal.fire({
+                    title: "Complete Registration?",
+                    text: "You will be redirected to login page after successful registration.",
+                    icon: "question",
+                    showCancelButton: true,
+                    confirmButtonColor: "#034a58",
+                    cancelButtonColor: "#57b894",
+                    confirmButtonText: "Register"
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        Swal.showLoading();
+                        $.ajax({
+                            url: 'http://localhost:8080/api/v1/user/register',
+                            method: 'POST',
+                            contentType: 'application/json',
+                            data: JSON.stringify({
+                                "username": name,
+                                "email": email,
+                                "password": password,
+                            }),
+                            success: function (response) {
+                                if (response.data && response.data.token) {
+                                    localStorage.setItem("token", response.data.token);
+                                }
+
+                                Swal.fire({
+                                    icon: "success",
+                                    title: "Success",
+                                    text: "Registration Successful! Please login.",
+                                    timer: 2000,
+                                    showConfirmButton: false
+                                }).then(() => {
+                                    window.location.href = "login.html";
+                                });
+                            },
+                            error: function (xhr) {
+                                Swal.hideLoading();
+
+                                if (xhr.status === 400) {
+                                    let errors = xhr.responseJSON?.errors || [];
+                                    let errorMessage = errors.map(e => e.message).join('\n');
+
+                                    Swal.fire({
+                                        icon: "error",
+                                        title: "Validation Error",
+                                        text: errorMessage || "Please check your input",
+                                    });
+                                } else if (xhr.status === 409) {
+                                    Swal.fire({
+                                        icon: "error",
+                                        title: "Registration Failed",
+                                        text: xhr.responseJSON?.message || "User already exists",
+                                    });
+                                } else {
+                                    Swal.fire({
+                                        icon: "error",
+                                        title: "Registration Failed",
+                                        text: xhr.responseJSON?.message || "Something went wrong. Please try again.",
+                                    });
+                                }
+                            }
+                        });
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+
+</html>

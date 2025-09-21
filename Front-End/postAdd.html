@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Home Chef-Post Add</title>
+    <link href="plugins/slick-carousel/slick/slick.css" rel="stylesheet">
+    <link href="plugins/slick-carousel/slick/slick-theme.css" rel="stylesheet">
+
+    <!-- Slick Slider JS -->
+    <script src="plugins/slick-carousel/slick/slick.min.js"></script>
+    <!-- Bootstrap -->
+    <link href="plugins/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link href="plugins/font-awesome/css/font-awesome.min.css" rel="stylesheet">
+    <!-- Owl Carousel -->
+    <link href="plugins/slick-carousel/slick/slick.css" rel="stylesheet">
+    <link href="plugins/slick-carousel/slick/slick-theme.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+    <link href="plugins/fancybox/jquery.fancybox.pack.css" rel="stylesheet">
+    <link href="plugins/jquery-nice-select/css/nice-select.css" rel="stylesheet">
+    <link href="plugins/seiyria-bootstrap-slider/dist/css/bootstrap-slider.min.css" rel="stylesheet">
+    <!-- CUSTOM CSS -->
+    <link href="css/style.css" rel="stylesheet">
+    <link rel="shortcut icon" href="img/logo2-removebg-preview.png" type="image/x-icon" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+            href="https://fonts.googleapis.com/css2?family=Work+Sans:wght@400;500;600;700&display=swap"
+            rel="stylesheet"
+    />
+
+    <link rel="stylesheet" href="fonts/icomoon/style.css" />
+    <link rel="stylesheet" href="fonts/flaticon/font/flaticon.css" />
+
+    <link rel="stylesheet" href="css/tiny-slider.css" />
+    <link rel="stylesheet" href="css/aos.css" />
+    <link rel="stylesheet" href="css/style1.css" />
+    <link rel="stylesheet" href="css/style.css" />
+</head>
+<body class="body-wrapper">
+<section id="navbar">
+    <div class="container" style="">
+        <div class="row">
+            <div class="col-md-12">
+                <nav class="navbar navbar-expand-lg  navigation">
+                    <a class="navbar-brand" href="pages/index.html">
+                        <img style="width: 3rem;height: 3rem" src="img/logo2-removebg-preview.png" alt="">
+                        <span>Home Chef</span></a>
+                    </a>
+                    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                        <ul class="navbar-nav ml-auto main-nav ">
+                            <li class="nav-item active">
+                                <a class="nav-link" href="home.html">Home</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="dashboardAdds.html">Dashboard</a>
+                            </li>
+                            <li class="nav-item dropdown dropdown-slide">
+                                <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    Pages <span><i class="fa fa-angle-down"></i></span>
+                                </a>
+                                <!-- Dropdown list -->
+                                <div class="dropdown-menu dropdown-menu-right">
+                                    <a class="dropdown-item" href="categoriesAdd.html">Category</a>
+                                    <a class="dropdown-item" href="blog.html">Blog</a>
+                                    <a class="dropdown-item" href="s-comment.html">Leave Some Comments</a>
+                                </div>
+                            </li>
+                            <li class="nav-item dropdown dropdown-slide">
+                                <a class="nav-link dropdown-toggle" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    Others <span><i class="fa fa-angle-down"></i></span>
+                                </a>
+                                <!-- Dropdown list -->
+                                <div class="dropdown-menu dropdown-menu-right">
+                                    <a class="dropdown-item" href="#">Chatting</a>
+                                    <!--									<a class="dropdown-item" href="#">Another action</a>-->
+                                    <!--									<a class="dropdown-item" href="#">Something else here</a>-->
+                                </div>
+                            </li>
+                        </ul>
+                        <ul class="navbar-nav ml-auto mt-10">
+                            <li class="nav-item">
+                                <a class="nav-link login-button" style="border-radius: 20px"
+                                   href="profile.html">Profile</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link add-button" style="border-radius: 20px" href="#" data-toggle="modal" data-target="#addPostModal">
+                                    <i class="fa fa-plus-circle"></i> Add Post
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </nav>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!--==================================
+=            User Profile            =
+===================================-->
+<div class="modal fade" id="addPostModal" tabindex="-1" role="dialog" aria-labelledby="addPostModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="addPostModalLabel">Add New Post</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <!-- Your existing form goes here -->
+                <form id="postAddForm">
+                    <!-- Project Title -->
+                    <div class="form-group">
+                        <label for="title">Project Title</label>
+                        <input type="text" class="form-control" id="title" placeholder="Title">
+                    </div>
+                    <!-- Categories -->
+                    <div class="form-group">
+                        <label for="categories">Categories</label>
+                        <select class="form-control" id="categories">
+                            <option value="none">Select Categories</option>
+                            <option value="Mobiles">Mobiles</option>
+                            <option value="Electronics">Electronics</option>
+                            <option value="Training">Training</option>
+                            <option value="Real Estate">Real Estate</option>
+                            <option value="Services">Services</option>
+                            <option value="Vehicles">Vehicles</option>
+                        </select>
+                    </div>
+                    <!-- File upload -->
+                    <div class="form-group choose-file">
+                        <label for="input-file">Upload Image</label>
+                        <input type="file" class="form-control-file d-inline" id="input-file">
+                    </div>
+                    <!-- Description -->
+                    <div class="form-group">
+                        <label for="description">Description</label>
+                        <textarea class="form-control" id="description" rows="3"></textarea>
+                    </div>
+                    <!-- Price -->
+                    <div class="form-group">
+                        <label for="price">Price</label>
+                        <input type="number" class="form-control" id="price" placeholder="0.00">
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" id="submitPost">Post</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!--============================
+=            Footer            =
+=============================-->
+<footer class="footer section section-sm" style="background-color:#003838; color:white; padding-top:60px; padding-bottom:60px;">
+    <div class="container" style="background-color:#003838;">
+        <div class="row">
+            <!-- About -->
+            <div class="col-lg-3 col-md-7 offset-md-1 offset-lg-0 text-center text-lg-start">
+                <div class="block about">
+                    <img src="img/logo2-removebg-preview.png" alt="Home Chef Logo" style="width:180px; height:auto;" class="mb-3">
+                    <p>
+                        Home Chef is your go-to platform for fresh meal kits, ready-to-eat dishes, and gourmet home cooking. Connect with professional chefs and enjoy homemade-quality meals today!
+                    </p>
+                </div>
+            </div>
+
+            <!-- Site Pages -->
+            <div class="col-lg-2 offset-lg-1 col-md-3 mt-4 mt-lg-0">
+                <div class="block">
+                    <h4 style="color:white;">Site Pages</h4>
+                    <ul class="list-unstyled">
+                        <li><a href="#" style="color:white;">Home</a></li>
+                        <li><a href="#" style="color:white;">Menu</a></li>
+                        <li><a href="#" style="color:white;">How It Works</a></li>
+                        <li><a href="#" style="color:white;">Deals & Coupons</a></li>
+                        <li><a href="#" style="color:white;">Articles & Tips</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Admin Pages -->
+            <div class="col-lg-2 col-md-3 offset-md-1 offset-lg-0 mt-4 mt-lg-0">
+                <div class="block">
+                    <h4 style="color:white;">Admin Pages</h4>
+                    <ul class="list-unstyled">
+                        <li><a href="#" style="color:white;">Dashboard</a></li>
+                        <li><a href="#" style="color:white;">Manage Orders</a></li>
+                        <li><a href="#" style="color:white;">Manage Chefs</a></li>
+                        <li><a href="#" style="color:white;">Reports</a></li>
+                        <li><a href="#" style="color:white;">Settings</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- App Promotion -->
+            <div class="col-lg-4 col-md-7 mt-4 mt-lg-0 text-center text-lg-start">
+                <div class="block-2 app-promotion">
+                    <a href="#">
+                        <img src="images/footer/phone-icon.png" alt="mobile-icon" style="width:60px; height:auto;">
+                    </a>
+                    <p class="mt-2">
+                        Get the Home Chef Mobile App and order your favorite meals anywhere, anytime!
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- Footer Bottom -->
+<footer class="footer-bottom" style="background-color:#002f2f; color:white; padding:15px 0;">
+    <div class="container" style="background-color:#002f2f;">
+        <div class="row align-items-center">
+            <div class="col-sm-6 col-12 text-center text-sm-start">
+                <p class="mb-0">Copyright © 2025 Home Chef. All Rights Reserved.</p>
+            </div>
+            <div class="col-sm-6 col-12 text-center text-sm-end">
+                <!-- Social Icons -->
+                <ul class="list-inline mb-0">
+                    <li class="list-inline-item"><a href="#" class="text-white fs-5 me-2"><i class="fab fa-facebook-f"></i></a></li>
+                    <li class="list-inline-item"><a href="#" class="text-white fs-5 me-2"><i class="fab fa-twitter"></i></a></li>
+                    <li class="list-inline-item"><a href="#" class="text-white fs-5 me-2"><i class="fab fa-instagram"></i></a></li>
+                    <li class="list-inline-item"><a href="#" class="text-white fs-5"><i class="fab fa-linkedin-in"></i></a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <!-- To Top -->
+    <div class="top-to text-center mt-2">
+        <a id="top" href="#" class="text-white fs-4"><i class="fas fa-angle-up"></i></a>
+    </div>
+</footer>
+
+<!-- Add Post Modal -->
+
+<script src="plugins/tether/js/tether.min.js"></script>
+<script src="plugins/raty/jquery.raty-fa.js"></script>
+<script src="plugins/bootstrap/dist/js/popper.min.js"></script>
+<script src="plugins/bootstrap/dist/js/bootstrap.min.js"></script>
+<script src="plugins/seiyria-bootstrap-slider/dist/bootstrap-slider.min.js"></script>
+<script src="plugins/slick-carousel/slick/slick.min.js"></script>
+<script src="plugins/jquery-nice-select/js/jquery.nice-select.min.js"></script>
+<script src="plugins/fancybox/jquery.fancybox.pack.js"></script>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCC72vZw-6tGqFyRhhg5CkF2fqfILn2Tsw"></script>
+<script src="js/scripts.js"></script>
+<script src="frameWork/jquery/jquery-3.7.1.min.js"></script>
+<script src="frameWork/sweetalert2/sweetalert2.all.min.js"></script>
+<script src="js/postAdd.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,521 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Home Chef - Dashboard</title>
+
+    <!-- Bootstrap -->
+    <link href="plugins/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+
+    <!-- Fancybox / Nice Select / Slider -->
+    <link href="plugins/fancybox/jquery.fancybox.pack.css" rel="stylesheet">
+    <link href="plugins/jquery-nice-select/css/nice-select.css" rel="stylesheet">
+    <link href="plugins/seiyria-bootstrap-slider/dist/css/bootstrap-slider.min.css" rel="stylesheet">
+
+    <!-- Custom CSS -->
+    <link href="css/style.css" rel="stylesheet">
+    <link rel="shortcut icon" href="img/logo2-removebg-preview.png" type="image/x-icon" />
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Work+Sans:wght@400;500;600;700&display=swap"
+        rel="stylesheet" />
+
+    <!-- Extra Fonts / Animations -->
+    <link rel="stylesheet" href="fonts/icomoon/style.css" />
+    <link rel="stylesheet" href="fonts/flaticon/font/flaticon.css" />
+    <link rel="stylesheet" href="css/tiny-slider.css" />
+    <link rel="stylesheet" href="css/aos.css" />
+    <link rel="stylesheet" href="css/style1.css" />
+</head>
+
+<body class="body-wrapper">
+    <section id="navbar">
+        <div class="container" style="">
+            <div class="row">
+                <div class="col-md-12">
+                    <nav class="navbar navbar-expand-lg  navigation">
+                        <a class="navbar-brand" href="pages/index.html">
+                            <img style="width: 3rem;height: 3rem" src="img/logo2-removebg-preview.png" alt="">
+                            <span>Home Chef</span></a>
+                        </a>
+                        <button class="navbar-toggler" type="button" data-toggle="collapse"
+                            data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+                            aria-expanded="false" aria-label="Toggle navigation">
+                            <span class="navbar-toggler-icon"></span>
+                        </button>
+                        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                            <ul class="navbar-nav ml-auto main-nav ">
+                                <li class="nav-item active">
+                                    <a class="nav-link" href="home.html">Home</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="dashboardAdds.html">Dashboard</a>
+                                </li>
+                                <li class="nav-item dropdown dropdown-slide">
+                                    <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown"
+                                        aria-haspopup="true" aria-expanded="false">
+                                        Pages <span><i class="fa fa-angle-down"></i></span>
+                                    </a>
+                                    <!-- Dropdown list -->
+                                    <div class="dropdown-menu dropdown-menu-right">
+                                        <a class="dropdown-item" href="categoriesAdd.html">Category</a>
+                                        <a class="dropdown-item" href="blog.html">Blog</a>
+                                        <a class="dropdown-item" href="s-comment.html">Leave Some Comments</a>
+                                    </div>
+                                </li>
+                                <li class="nav-item dropdown dropdown-slide">
+                                    <a class="nav-link dropdown-toggle" href="" data-toggle="dropdown"
+                                        aria-haspopup="true" aria-expanded="false">
+                                        Others <span><i class="fa fa-angle-down"></i></span>
+                                    </a>
+                                    <!-- Dropdown list -->
+                                    <div class="dropdown-menu dropdown-menu-right">
+                                        <a class="dropdown-item" href="#">Chatting</a>
+                                        <!--									<a class="dropdown-item" href="#">Another action</a>-->
+                                        <!--									<a class="dropdown-item" href="#">Something else here</a>-->
+                                    </div>
+                                </li>
+                            </ul>
+                            <ul class="navbar-nav ml-auto mt-10">
+                                <li class="nav-item">
+                                    <a class="nav-link login-button" style="border-radius: 20px"
+                                        href="profile.html">Profile</a>
+                                </li>
+                                <li class="nav-item">
+                                    <!--<a class="nav-link add-button" style="border-radius: 20px" href="#"
+                                   data-toggle="modal"
+                                   data-target="#addPostModal">
+                                    <i class="fa fa-plus-circle"></i> Add Post
+                                </a>-->
+                                    <!--                                <button type="button" class="btn btn-success mb-4" data-bs-toggle="modal" id="addPost" data-bs-target="#addPostModal">Add Post</button>-->
+                                    <button type="button" class="btn btn-success" id="addPostBtn"
+                                        onclick="openAddPostModal()"
+                                        style="width: 120px;height: 35px;border-radius: 30px;padding: 0.25rem 0.5rem;">
+                                        <i class="fa fa-plus-circle mr-1"></i> Add Post
+                                    </button>
+                                </li>
+                            </ul>
+                        </div>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <!--==================================
+=            User Profile            =
+===================================-->
+
+    <section class="user-profile section">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-10 offset-md-1 col-lg-12 offset-lg-0">
+                    <!-- Recently Favorited -->
+                    <div class="widget dashboard-container my-adslist" style="margin-top: 100px">
+                        <div class="row" id="itemsContainer">
+
+                        </div>
+                    </div>
+                </div>
+
+                <!-- My addvertisements Model -->
+                <div class="modal fade" id="addvertisementModal" tabindex="-1"
+                    aria-labelledby="addvertisementModalLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-lg modal-dialog-centered">
+                            <div class="modal-body p-0">
+                                <table class="table table-hover mb-0">
+                                    <thead class="table-light">
+                                        <tr>
+                                            <th width="100">Image</th>
+                                            <th>Product Title</th>
+                                            <th width="200" class="text-center">Description</th>
+                                            <th width="200" class="text-center">Category</th>
+                                            <th width="200" class="text-center">Price</th>
+                                            <th width="200" class="text-center">Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody class="table product-table">
+                                        <tr></tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-success">Add New Advertisement</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!--edit advertisement model-->
+                <div class="modal fade" id="editItemModal" tabindex="-1" role="dialog"
+                    aria-labelledby="editItemModalLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-lg" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header bg-success text-white">
+                                <h5 class="modal-title" id="editItemModalLabel">Edit Advertisement</h5>
+                                <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <form id="editItemForm">
+                                    <input id="editItemId">
+                                    <div class="form-group">
+                                        <label for="editItemTitle">Item Title</label>
+                                        <input type="text" class="form-control" id="editItemTitle" required>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-6 form-group">
+                                            <label for="editItemCategory">Category</label>
+                                            <select class="form-control" id="editItemCategory" required></select>
+                                        </div>
+                                        <div class="col-md-6 form-group">
+                                            <label for="editItemPrice">Price</label>
+                                            <input type="number" class="form-control" id="editItemPrice" step="0.01"
+                                                required>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-6 form-group">
+                                            <label for="editItemQuantity">Quantity</label>
+                                            <input type="number" class="form-control" id="editItemQuantity" min="1"
+                                                required>
+                                        </div>
+                                        <div class="col-md-6 form-group">
+                                            <label for="editItemLocation">Location</label>
+                                            <input type="text" class="form-control" id="editItemLocation" required>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="editItemDescription">Description</label>
+                                        <textarea class="form-control" id="editItemDescription" rows="4"
+                                            required></textarea>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Current Image</label>
+                                        <div id="imagePreviewEdit" class="mb-3"></div>
+                                        <label for="editItemImages">Update Image</label>
+                                        <input type="file" class="form-control-file" id="editItemImages"
+                                            accept="image/*">
+                                    </div>
+                                </form>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                                <button type="button" class="btn btn-primary" id="saveEditChanges">Save Changes</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!--           item details model-->
+                <div class="modal fade" id="itemDetailsModal" tabindex="-1" aria-labelledby="itemDetailsModalLabel"
+                    aria-hidden="true">
+                    <div class="modal-dialog modal-lg modal-dialog-centered">
+                        <div class="modal-content">
+                            <div class="modal-header bg-success text-white">
+                                <h5 class="modal-title" id="itemDetailsModalLabel">Item Details</h5>
+                                <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <div class="row g-3">
+                                    <div class="col-md-5">
+                                        <img id="detailImage" class="img-fluid rounded shadow" src=""
+                                            alt="Item image" />
+                                    </div>
+                                    <div class="col-md-7">
+                                        <h4 id="detailTitle" class="mb-3"></h4>
+                                        <p><strong>Item Code:</strong> <span id="detailId"></span></p>
+                                        <p><strong>Category:</strong> <span id="detailCategory"></span></p>
+                                        <p><strong>Description:</strong> <span id="detailDescription"></span></p>
+                                        <p><strong>Location:</strong> <span id="detailLocation"></span></p>
+                                        <p><strong>Quantity:</strong> <span id="detailQuantity"></span></p>
+                                        <p><strong>Price:</strong> Rs.<span id="detailPrice"></span></p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Add Post Modal -->
+                <div class="modal fade" id="addPostModal" tabindex="-1" aria-labelledby="addPostModalLabel"
+                    aria-hidden="true" style="margin-top: 90px; height: auto">
+                    <div class="modal-dialog modal-lg">
+                        <div class="modal-content">
+                            <div class="modal-header bg-success text-light">
+                                <h5 class="modal-title" id="addPostModalLabel" style="font-family: SansSerif">
+                                    <i class="fas fa-plus-circle mr-2"></i>Add New Item
+                                </h5>
+                                <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <form id="postAddForm" enctype="multipart/form-data">
+                                <div class="modal-body">
+                                    <!-- Item Title -->
+                                    <div class="form-group">
+                                        <label for="itemTitle"><i class="fas fa-heading mr-2 text-success"></i>Item
+                                            Title*</label>
+                                        <div class="input-group">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text bg-light"><i
+                                                        class="fas fa-tag text-success"></i></span>
+                                            </div>
+                                            <input type="text" class="form-control" id="itemTitle"
+                                                placeholder="Enter item title" name="title" required>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <!-- Category -->
+                                        <div class="col-md-6 form-group">
+<!--                                            <label for="itemCategory">-->
+                                                <i class="fas fa-tags mr-2 text-success"></i>Category*</label>
+                                            <div class="input-group">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text bg-light"><i
+                                                            class="fas fa-filter text-success"></i></span>
+                                                </div>
+                                                <select class="form-control" id="itemCategorys" name="category"
+                                                    required>
+                                                    <option value="" disabled selected>Choose a category</option>
+                                                    <option value="1" data-icon="fas fa-fish">Meals</option>
+                                                    <option value="2" data-icon="fas fa-filter">Snacks</option>
+                                                    <option value="3" data-icon="fas fa-utensils">Beverages</option>
+                                                    <option value="4" data-icon="fas fa-water">Desserts</option>
+                                                </select>
+                                            </div>
+                                        </div>
+
+                                        <!-- Price -->
+                                        <div class="col-md-6 form-group">
+                                            <label for="itemPrice"><i
+                                                    class="fas fa-dollar-sign mr-2 text-success"></i>Price*</label>
+                                            <div class="input-group">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text bg-light"><i
+                                                            class="fas fa-rupee-sign text-success"></i></span>
+                                                </div>
+                                                <input type="number" class="form-control" id="itemPrice"
+                                                    placeholder="0.00" step="0.01" name="price" required>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <!-- Quantity -->
+                                        <div class="col-md-6 form-group">
+                                            <label for="itemQuantity"><i
+                                                    class="fas fa-boxes mr-2 text-success"></i>Quantity*</label>
+                                            <div class="input-group">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text bg-light"><i
+                                                            class="fas fa-cubes text-success"></i></span>
+                                                </div>
+                                                <input type="number" class="form-control" id="itemQuantity" min="1"
+                                                    value="1" name="quantity" required>
+                                            </div>
+                                        </div>
+
+                                        <!-- Location -->
+                                        <div class="col-md-6 form-group">
+                                            <label for="itemLocation"><i
+                                                    class="fas fa-map-marker-alt mr-2 text-success"></i>Location*</label>
+                                            <div class="input-group">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text bg-light"><i
+                                                            class="fas fa-location-dot text-success"></i></span>
+                                                </div>
+                                                <input type="text" class="form-control" id="itemLocation"
+                                                    placeholder="Enter location" name="location" required>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- Email -->
+                                    <div class="form-group col-md-6 p-0">
+                                        <label for="itemUserEmail"><i
+                                                class="fas fa-envelope mr-2 text-success"></i>Email*</label>
+                                        <div class="input-group">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text bg-light"><i
+                                                        class="fas fa-envelope text-success"></i></span>
+                                            </div>
+                                            <input type="email" class="form-control" id="itemUserEmail" name="email"
+                                                required readonly>
+                                        </div>
+                                    </div>
+
+                                    <!-- Description -->
+                                    <div class="form-group">
+                                        <label for="itemDescription"><i
+                                                class="fas fa-align-left mr-2 text-success"></i>Description*</label>
+                                        <div class="input-group">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text bg-light h-100"><i
+                                                        class="fas fa-file-alt text-success"></i></span>
+                                            </div>
+                                            <textarea class="form-control" id="itemDescription" rows="4"
+                                                placeholder="Enter detailed description" name="description"
+                                                required></textarea>
+                                        </div>
+                                    </div>
+
+                                    <!-- Image Upload -->
+                                    <div class="form-group">
+                                        <label><i class="fas fa-images mr-2 text-success"></i>Upload Images*</label>
+                                        <div class="custom-file">
+                                            <input type="file" class="custom-file-input" id="itemImages" multiple
+                                                accept="image/*" name="images" required>
+                                            <label class="custom-file-label" for="itemImages"><i
+                                                    class="fas fa-cloud-upload-alt mr-2"></i>Choose files...</label>
+                                        </div>
+                                        <small class="form-text text-muted"><i class="fas fa-info-circle mr-1"></i>You
+                                            can upload multiple images</small>
+                                        <div id="imagePreview" class="mt-2 d-flex flex-wrap"></div>
+                                    </div>
+
+                                    <!-- Terms -->
+                                    <div class="form-group form-check">
+                                        <input type="checkbox" class="form-check-input" id="agreeTerms" required>
+                                        <label class="form-check-label" for="agreeTerms">
+                                            <i class="fas fa-file-signature mr-2 text-success"></i>I agree to the terms
+                                            and conditions
+                                        </label>
+                                    </div>
+                                </div>
+
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal"><i
+                                            class="fas fa-times mr-2"></i>Cancel</button>
+                                    <button type="submit" class="btn btn-primary" id="submitPost"><i
+                                            class="fas fa-paper-plane mr-2"></i>Post Item</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!--============================
+=            Footer            =
+=============================-->
+    <footer class="footer section section-sm"
+        style="background-color:#003838; color:white; padding-top:60px; padding-bottom:60px;">
+        <div class="container" style="background-color:#003838;">
+            <div class="row">
+                <!-- About -->
+                <div class="col-lg-3 col-md-7 offset-md-1 offset-lg-0 text-center text-lg-start">
+                    <div class="block about">
+                        <img src="img/logo2-removebg-preview.png" alt="Home Chef Logo" style="width:180px; height:auto;"
+                            class="mb-3">
+                        <p>
+                            Home Chef is your go-to platform for fresh meal kits, ready-to-eat dishes, and gourmet home
+                            cooking. Connect with professional chefs and enjoy homemade-quality meals today!
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Site Pages -->
+                <div class="col-lg-2 offset-lg-1 col-md-3 mt-4 mt-lg-0">
+                    <div class="block">
+                        <h4 style="color:white;">Site Pages</h4>
+                        <ul class="list-unstyled">
+                            <li><a href="#" style="color:white;">Home</a></li>
+                            <li><a href="#" style="color:white;">Menu</a></li>
+                            <li><a href="#" style="color:white;">How It Works</a></li>
+                            <li><a href="#" style="color:white;">Deals & Coupons</a></li>
+                            <li><a href="#" style="color:white;">Articles & Tips</a></li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Admin Pages -->
+                <div class="col-lg-2 col-md-3 offset-md-1 offset-lg-0 mt-4 mt-lg-0">
+                    <div class="block">
+                        <h4 style="color:white;">Admin Pages</h4>
+                        <ul class="list-unstyled">
+                            <li><a href="#" style="color:white;">Dashboard</a></li>
+                            <li><a href="#" style="color:white;">Manage Orders</a></li>
+                            <li><a href="#" style="color:white;">Manage Chefs</a></li>
+                            <li><a href="#" style="color:white;">Reports</a></li>
+                            <li><a href="#" style="color:white;">Settings</a></li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- App Promotion -->
+                <div class="col-lg-4 col-md-7 mt-4 mt-lg-0 text-center text-lg-start">
+                    <div class="block-2 app-promotion">
+                        <a href="#">
+                            <img src="images/footer/phone-icon.png" alt="mobile-icon" style="width:60px; height:auto;">
+                        </a>
+                        <p class="mt-2">
+                            Get the Home Chef Mobile App and order your favorite meals anywhere, anytime!
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Footer Bottom -->
+    <footer class="footer-bottom" style="background-color:#002f2f; color:white; padding:15px 0;">
+        <div class="container" style="background-color:#002f2f;">
+            <div class="row align-items-center">
+                <div class="col-sm-6 col-12 text-center text-sm-start">
+                    <p class="mb-0">Copyright © 2025 Home Chef. All Rights Reserved.</p>
+                </div>
+                <div class="col-sm-6 col-12 text-center text-sm-end">
+                    <!-- Social Icons -->
+                    <ul class="list-inline mb-0">
+                        <li class="list-inline-item"><a href="#" class="text-white fs-5 me-2"><i
+                                    class="fab fa-facebook-f"></i></a></li>
+                        <li class="list-inline-item"><a href="#" class="text-white fs-5 me-2"><i
+                                    class="fab fa-twitter"></i></a></li>
+                        <li class="list-inline-item"><a href="#" class="text-white fs-5 me-2"><i
+                                    class="fab fa-instagram"></i></a></li>
+                        <li class="list-inline-item"><a href="#" class="text-white fs-5"><i
+                                    class="fab fa-linkedin-in"></i></a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <!-- To Top -->
+        <div class="top-to text-center mt-2">
+            <a id="top" href="#" class="text-white fs-4"><i class="fas fa-angle-up"></i></a>
+        </div>
+    </footer>
+
+
+
+
+    <!-- ✅ Scripts -->
+    <script src="frameWork/jquery/jquery-3.7.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/jwt-decode@3.1.2/build/jwt-decode.min.js"></script>
+    <script src="plugins/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="plugins/seiyria-bootstrap-slider/dist/bootstrap-slider.min.js"></script>
+    <script src="plugins/jquery-nice-select/js/jquery.nice-select.min.js"></script>
+    <script src="plugins/fancybox/jquery.fancybox.pack.js"></script>
+    <script src="frameWork/sweetalert2/sweetalert2.all.min.js"></script>
+
+    <!-- Custom Scripts -->
+    <script src="js/scripts.js"></script>
+    <script src="js/dashboardAdds.js"></script>
+    <script src="js/shoppingCart.js"></script>
+    <script src="js/postAdd.js"></script>
+
+</body>
+
+</html>
