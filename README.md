@@ -22,30 +22,23 @@ Follow these steps to run the project locally.
 Home Page
 ![homepage.png](Screenshots/homepage.png)
 
-
 Login
 ![Login.png](Screenshots/Login.png)
-
 
 Buyer Profile
 ![BuyerProfile.png](Screenshots/BuyerProfile.png)
 
-
 Buyer Dashboard
 ![BuyerDashboard.png](Screenshots/BuyerDashboard.png)
-
 
 Shopping Cart
 ![ShoppingCart.png](Screenshots/ShoppingCart.png)
 
-
 Add Items
 ![AddItem.png](Screenshots/AddItem.png)
 
-
 Checkouts
 ![Checkouts.png](Screenshots/Checkouts.png)
-
 
 ### 🔹 Full Project
 Clone the repository:
